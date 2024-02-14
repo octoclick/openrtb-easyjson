@@ -23,7 +23,7 @@ package main
 
 import (
   "log"
-  "github.com/bsm/openrtb/v3"
+  "github.com/octoclick/openrtb-easyjson"
 )
 
 func main() {

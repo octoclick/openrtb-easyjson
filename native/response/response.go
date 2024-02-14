@@ -3,7 +3,7 @@ package response
 import (
 	"encoding/json"
 
-	"github.com/bsm/openrtb/v3"
+	"github.com/octoclick/openrtb-easyjson"
 )
 
 // Response is the native object is the top level JSON object which identifies a native response.

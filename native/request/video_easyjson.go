@@ -4,7 +4,7 @@ package request
 
 import (
 	json "encoding/json"
-	_v3 "github.com/bsm/openrtb/v3"
+	_v3 "github.com/octoclick/openrtb-easyjson"
 	easyjson "github.com/mailru/easyjson"
 	jlexer "github.com/mailru/easyjson/jlexer"
 	jwriter "github.com/mailru/easyjson/jwriter"
