@@ -17,7 +17,7 @@ var (
 	_ easyjson.Marshaler
 )
 
-func easyjson6ff3ac1dDecodeGithubComBsmOpenrtbV3NativeResponse(in *jlexer.Lexer, out *Response) {
+func easyjson6ff3ac1dDecodeGithubComOctoclickOpenrtbEasyjsonNativeResponse(in *jlexer.Lexer, out *Response) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -90,6 +90,29 @@ func easyjson6ff3ac1dDecodeGithubComBsmOpenrtbV3NativeResponse(in *jlexer.Lexer,
 			}
 		case "jstracker":
 			out.JSTracker = string(in.String())
+		case "eventtrackers":
+			if in.IsNull() {
+				in.Skip()
+				out.EventTrackers = nil
+			} else {
+				in.Delim('[')
+				if out.EventTrackers == nil {
+					if !in.IsDelim(']') {
+						out.EventTrackers = make([]EventTrackers, 0, 1)
+					} else {
+						out.EventTrackers = []EventTrackers{}
+					}
+				} else {
+					out.EventTrackers = (out.EventTrackers)[:0]
+				}
+				for !in.IsDelim(']') {
+					var v3 EventTrackers
+					(v3).UnmarshalEasyJSON(in)
+					out.EventTrackers = append(out.EventTrackers, v3)
+					in.WantComma()
+				}
+				in.Delim(']')
+			}
 		case "ext":
 			if data := in.Raw(); in.Ok() {
 				in.AddError((out.Ext).UnmarshalJSON(data))
@@ -104,7 +127,7 @@ func easyjson6ff3ac1dDecodeGithubComBsmOpenrtbV3NativeResponse(in *jlexer.Lexer,
 		in.Consumed()
 	}
 }
-func easyjson6ff3ac1dEncodeGithubComBsmOpenrtbV3NativeResponse(out *jwriter.Writer, in Response) {
+func easyjson6ff3ac1dEncodeGithubComOctoclickOpenrtbEasyjsonNativeResponse(out *jwriter.Writer, in Response) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -126,11 +149,11 @@ func easyjson6ff3ac1dEncodeGithubComBsmOpenrtbV3NativeResponse(out *jwriter.Writ
 			out.RawString("null")
 		} else {
 			out.RawByte('[')
-			for v3, v4 := range in.Assets {
-				if v3 > 0 {
+			for v4, v5 := range in.Assets {
+				if v4 > 0 {
 					out.RawByte(',')
 				}
-				(v4).MarshalEasyJSON(out)
+				(v5).MarshalEasyJSON(out)
 			}
 			out.RawByte(']')
 		}
@@ -145,11 +168,11 @@ func easyjson6ff3ac1dEncodeGithubComBsmOpenrtbV3NativeResponse(out *jwriter.Writ
 		out.RawString(prefix)
 		{
 			out.RawByte('[')
-			for v5, v6 := range in.ImpTrackers {
-				if v5 > 0 {
+			for v6, v7 := range in.ImpTrackers {
+				if v6 > 0 {
 					out.RawByte(',')
 				}
-				out.String(string(v6))
+				out.String(string(v7))
 			}
 			out.RawByte(']')
 		}
@@ -158,6 +181,20 @@ func easyjson6ff3ac1dEncodeGithubComBsmOpenrtbV3NativeResponse(out *jwriter.Writ
 		const prefix string = ",\"jstracker\":"
 		out.RawString(prefix)
 		out.String(string(in.JSTracker))
+	}
+	if len(in.EventTrackers) != 0 {
+		const prefix string = ",\"eventtrackers\":"
+		out.RawString(prefix)
+		{
+			out.RawByte('[')
+			for v8, v9 := range in.EventTrackers {
+				if v8 > 0 {
+					out.RawByte(',')
+				}
+				(v9).MarshalEasyJSON(out)
+			}
+			out.RawByte(']')
+		}
 	}
 	if len(in.Ext) != 0 {
 		const prefix string = ",\"ext\":"
@@ -170,23 +207,23 @@ func easyjson6ff3ac1dEncodeGithubComBsmOpenrtbV3NativeResponse(out *jwriter.Writ
 // MarshalJSON supports json.Marshaler interface
 func (v Response) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjson6ff3ac1dEncodeGithubComBsmOpenrtbV3NativeResponse(&w, v)
+	easyjson6ff3ac1dEncodeGithubComOctoclickOpenrtbEasyjsonNativeResponse(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v Response) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjson6ff3ac1dEncodeGithubComBsmOpenrtbV3NativeResponse(w, v)
+	easyjson6ff3ac1dEncodeGithubComOctoclickOpenrtbEasyjsonNativeResponse(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *Response) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjson6ff3ac1dDecodeGithubComBsmOpenrtbV3NativeResponse(&r, v)
+	easyjson6ff3ac1dDecodeGithubComOctoclickOpenrtbEasyjsonNativeResponse(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *Response) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjson6ff3ac1dDecodeGithubComBsmOpenrtbV3NativeResponse(l, v)
+	easyjson6ff3ac1dDecodeGithubComOctoclickOpenrtbEasyjsonNativeResponse(l, v)
 }
