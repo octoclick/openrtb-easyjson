@@ -11,7 +11,7 @@ var (
 	ErrInvalidReqNoID     = errors.New("openrtb: request ID missing")
 	ErrInvalidReqNoImps   = errors.New("openrtb: request has no impressions")
 	ErrInvalidReqMultiInv = errors.New("openrtb: request has multiple inventory sources") // has site and app
-	ErrInvalidSitePage    = errors.New("openrtb: request hasn't site.page")
+	ErrInvalidSitePage    = errors.New("openrtb: request hasn't site.page or site.domain")
 	ErrInvalidDeviceIP    = errors.New("openrtb: request has invalid device.ip || device.ipv6")
 )
 
@@ -51,7 +51,7 @@ func (req *BidRequest) Validate() error {
 	} else if req.Site != nil && req.App != nil {
 		return ErrInvalidReqMultiInv
 	}
-	if req.Site != nil && len(req.Site.Page) == 0 {
+	if req.Site != nil && len(req.Site.Page) == 0 && len(req.Site.Domain) == 0 {
 		return ErrInvalidSitePage
 	}
 	if net.ParseIP(req.Device.IP) == nil && net.ParseIP(req.Device.IPv6) == nil {
